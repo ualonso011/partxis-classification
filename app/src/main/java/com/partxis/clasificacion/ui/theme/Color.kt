@@ -15,6 +15,10 @@ val Oro = Color(0xFFFFD700)
 val Plata = Color(0xFFC0C0C0)
 val Bronce = Color(0xFFCD7F32)
 
+val OroDark = Color(0xFFDAA520)
+val PlataDark = Color(0xFFE8E8E8)
+val BronceDark = Color(0xFFB87333)
+
 val VerdeFelt = Color(0xFF1B5E20)
 val Madera = Color(0xFF8D6E63)
 

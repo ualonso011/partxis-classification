@@ -55,7 +55,7 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.showCreateDialog() },
-                containerColor = ParchisAmarillo
+                containerColor = MaterialTheme.colorScheme.secondary
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Nueva clasificación")
             }
@@ -140,7 +140,7 @@ fun ClasificacionCard(
             .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -154,7 +154,7 @@ fun ClasificacionCard(
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
-                    .background(ParchisVerde),
+                    .background(ParchisVerdeClaro),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

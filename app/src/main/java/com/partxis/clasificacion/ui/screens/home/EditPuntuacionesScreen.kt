@@ -7,18 +7,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.ui.theme.Oro
 import com.partxis.clasificacion.ui.theme.Plata
 import com.partxis.clasificacion.ui.theme.Bronce
-import com.partxis.clasificacion.ui.theme.ParchisAmarillo
+import com.partxis.clasificacion.ui.theme.OroDark
+import com.partxis.clasificacion.ui.theme.PlataDark
+import com.partxis.clasificacion.ui.theme.BronceDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,9 +49,9 @@ fun EditPuntuacionesScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = ParchisAmarillo,
-                    titleContentColor = MaterialTheme.colorScheme.onSecondary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSecondary
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             )
         }
@@ -118,16 +122,19 @@ fun PuntuacionPosicionCard(
     onPuntosChange: (Int) -> Unit
 ) {
     val posicionColor = when (posicion) {
-        1 -> Oro
-        2 -> Plata
-        3 -> Bronce
+        1 -> if (isSystemInDarkTheme()) OroDark else Oro
+        2 -> if (isSystemInDarkTheme()) PlataDark else Plata
+        3 -> if (isSystemInDarkTheme()) BronceDark else Bronce
         else -> MaterialTheme.colorScheme.surfaceVariant
     }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = posicionColor)
+        colors = CardDefaults.cardColors(
+            containerColor = posicionColor,
+            contentColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurfaceVariant
+        )
     ) {
         Row(
             modifier = Modifier
