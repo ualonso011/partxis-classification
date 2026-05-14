@@ -195,13 +195,12 @@ fun PuntuacionPosicionCard(
 
             OutlinedTextField(
                 value = puntos.toString(),
-                onValueChange = { value ->
+                onValueChange = { value: String ->
                     value.toIntOrNull()?.let { onPuntosChange(it) }
                 },
                 modifier = Modifier.width(80.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
-                textColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurfaceVariant,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = if (posicion <= 3) Color.Black.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = if (posicion <= 3) Color.Black.copy(alpha = 0.3f) else MaterialTheme.colorScheme.outline,
