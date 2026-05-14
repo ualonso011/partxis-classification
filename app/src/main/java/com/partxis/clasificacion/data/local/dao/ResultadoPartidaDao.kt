@@ -29,6 +29,9 @@ interface ResultadoPartidaDao {
         GROUP BY rp.jugadorId
     """)
     suspend fun getRankingByClasificacion(clasificacionId: Long): List<JugadorPuntos>
+
+    @Query("SELECT * FROM resultados_partida WHERE jugadorId = :jugadorId")
+    suspend fun getResultadosByJugador(jugadorId: Long): List<ResultadoPartidaEntity>
 }
 
 data class JugadorPuntos(

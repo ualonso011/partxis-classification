@@ -125,7 +125,7 @@ class PartxisRepository @Inject constructor(
         sorted.forEach { rp ->
             val jugador = jugadorMap[rp.jugadorId]
             jugador?.let {
-                val victorias = resultadoPartidaDao.getResultadosByPartida(rp.jugadorId)
+                val victorias = resultadoPartidaDao.getResultadosByJugador(rp.jugadorId)
                     .count { it.posicion == 1 }
                 partidas[rp.jugadorId] = victorias
             }
