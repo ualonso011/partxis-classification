@@ -16,7 +16,7 @@ kotlin {
 
 android {
     namespace = "com.partxis.clasificacion"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.partxis.clasificacion"
