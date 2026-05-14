@@ -23,10 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.domain.model.*
 import com.partxis.clasificacion.ui.theme.*
-import com.partxis.clasificacion.data.local.entity.PuntuacionPosicionEntity
+import androidx.compose.foundation.isSystemInDarkTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.partxis.clasificacion.data.local.entity.PuntuacionPosicionEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -346,9 +347,9 @@ fun RankingTab(ranking: List<RankingEntry>) {
 @Composable
 fun RankingCard(entry: RankingEntry, posicion: Int) {
     val backgroundColor = when (posicion) {
-        1 -> Oro
-        2 -> Plata
-        3 -> Bronce
+        1 -> if (isSystemInDarkTheme()) OroDark else Oro
+        2 -> if (isSystemInDarkTheme()) PlataDark else Plata
+        3 -> if (isSystemInDarkTheme()) BronceDark else Bronce
         else -> MaterialTheme.colorScheme.surface
     }
 
@@ -363,11 +364,16 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+                    Box(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                            .background(when (posicion) {
+                                1 -> if (isSystemInDarkTheme()) OroDark else Oro
+                                2 -> if (isSystemInDarkTheme()) PlataDark else Plata
+                                3 -> if (isSystemInDarkTheme()) BronceDark else Bronce
+                                else -> MaterialTheme.colorScheme.primary
+                            }),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -497,9 +503,9 @@ fun PartidaCard(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = when (resultado.posicion) {
-                            1 -> Oro
-                            2 -> Plata
-                            3 -> Bronce
+                            1 -> if (isSystemInDarkTheme()) OroDark else Oro
+                            2 -> if (isSystemInDarkTheme()) PlataDark else Plata
+                            3 -> if (isSystemInDarkTheme()) BronceDark else Bronce
                             else -> MaterialTheme.colorScheme.onSurface
                         },
                         modifier = Modifier.width(32.dp)
