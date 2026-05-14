@@ -13,7 +13,7 @@ import com.partxis.clasificacion.data.local.entity.*
         ResultadoPartidaEntity::class,
         PuntuacionPosicionEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class PartxisDatabase : RoomDatabase() {

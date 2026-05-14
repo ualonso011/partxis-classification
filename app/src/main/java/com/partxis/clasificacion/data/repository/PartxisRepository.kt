@@ -105,13 +105,18 @@ class PartxisRepository @Inject constructor(
         partida?.let { partidaDao.deletePartida(it) }
     }
 
-    suspend fun getRanking(clasificacionId: Long): List<RankingEntry> {
+    suspend fun getRanking(clasificacionId: Long, invertido: Boolean = false): List<RankingEntry> {
         val ranking = resultadoPartidaDao.getRankingByClasificacion(clasificacionId)
+        val sorted = if (invertido) {
+            ranking.sortedBy { it.totalPuntos }
+        } else {
+            ranking.sortedByDescending { it.totalPuntos }
+        }
         val jugadores = jugadorDao.getJugadoresByClasificacionSync(clasificacionId)
         val jugadorMap = jugadores.associateBy { it.id }
 
         val partidas = mutableMapOf<Long, Int>()
-        ranking.forEach { rp ->
+        sorted.forEach { rp ->
             val jugador = jugadorMap[rp.jugadorId]
             jugador?.let {
                 val victorias = resultadoPartidaDao.getResultadosByPartida(rp.jugadorId)
@@ -120,7 +125,7 @@ class PartxisRepository @Inject constructor(
             }
         }
 
-        return ranking.mapIndexed { index, rp ->
+        return sorted.mapIndexed { index, rp ->
             val jugador = jugadorMap[rp.jugadorId]
             RankingEntry(
                 posicion = index + 1,
@@ -147,8 +152,8 @@ class PartxisRepository @Inject constructor(
         puntuacionPosicionDao.insertPuntuaciones(entities)
     }
 
-    private fun ClasificacionEntity.toDomain() = Clasificacion(id, nombre, fechaCreacion)
-    private fun Clasificacion.toEntity() = ClasificacionEntity(id, nombre, fechaCreacion)
+    private fun ClasificacionEntity.toDomain() = Clasificacion(id, nombre, fechaCreacion, puntuacionInvertida)
+    private fun Clasificacion.toEntity() = ClasificacionEntity(id, nombre, fechaCreacion, puntuacionInvertida)
     private fun JugadorEntity.toDomain() = Jugador(id, nombre, color, clasificacionId)
     private fun Jugador.toEntity() = JugadorEntity(id, nombre, color, clasificacionId)
     private fun PartidaEntity.toDomain(resultados: List<Resultado> = emptyList()) =

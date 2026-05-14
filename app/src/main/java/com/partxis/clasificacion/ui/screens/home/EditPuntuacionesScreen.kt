@@ -91,6 +91,41 @@ fun EditPuntuacionesScreen(
                 }
 
                 item {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    "Orden invertido",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    "Gana el que menos puntos tiene",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                                )
+                            }
+                            Switch(
+                                checked = uiState.puntuacionInvertida,
+                                onCheckedChange = { viewModel.setPuntuacionInvertida(it) }
+                            )
+                        }
+                    }
+                }
+
+                item {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
@@ -165,7 +200,14 @@ fun PuntuacionPosicionCard(
                 },
                 modifier = Modifier.width(80.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true
+                singleLine = true,
+                textColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurfaceVariant,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = if (posicion <= 3) Color.Black.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = if (posicion <= 3) Color.Black.copy(alpha = 0.3f) else MaterialTheme.colorScheme.outline,
+                    focusedTextColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurfaceVariant,
+                    unfocusedTextColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurfaceVariant
+                )
             )
         }
     }

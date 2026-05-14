@@ -17,7 +17,8 @@ data class EditPuntuacionesUiState(
     val maxPosiciones: Int = 8,
     val isLoading: Boolean = true,
     val isSaving: Boolean = false,
-    val saved: Boolean = false
+    val saved: Boolean = false,
+    val puntuacionInvertida: Boolean = false
 )
 
 @HiltViewModel
@@ -38,6 +39,7 @@ class EditPuntuacionesViewModel @Inject constructor(
     private fun loadPuntuaciones() {
         viewModelScope.launch {
             repository.getPuntuacionesByClasificacion(clasificacionId).collect { puntuaciones ->
+                val clasificacion = repository.getClasificacionById(clasificacionId)
                 val defaultPuntuaciones = (1.._uiState.value.maxPosiciones).map { posicion ->
                     puntuaciones.find { it.posicion == posicion }
                         ?: PuntuacionPosicionEntity(
@@ -48,6 +50,7 @@ class EditPuntuacionesViewModel @Inject constructor(
                 }
                 _uiState.value = _uiState.value.copy(
                     puntuaciones = defaultPuntuaciones,
+                    puntuacionInvertida = clasificacion?.puntuacionInvertida ?: false,
                     isLoading = false
                 )
             }
@@ -72,6 +75,10 @@ class EditPuntuacionesViewModel @Inject constructor(
         }
     }
 
+    fun setPuntuacionInvertida(invertido: Boolean) {
+        _uiState.value = _uiState.value.copy(puntuacionInvertida = invertido)
+    }
+
     fun savePuntuaciones() {
         _uiState.value = _uiState.value.copy(isSaving = true)
 
@@ -80,6 +87,14 @@ class EditPuntuacionesViewModel @Inject constructor(
                 .filter { it.puntos > 0 }
                 .map { it.posicion to it.puntos }
             repository.savePuntuaciones(clasificacionId, puntuaciones)
+
+            val clasificacion = repository.getClasificacionById(clasificacionId)
+            clasificacion?.let {
+                repository.updateClasificacion(
+                    it.copy(puntuacionInvertida = _uiState.value.puntuacionInvertida)
+                )
+            }
+
             _uiState.value = _uiState.value.copy(isSaving = false, saved = true)
         }
     }

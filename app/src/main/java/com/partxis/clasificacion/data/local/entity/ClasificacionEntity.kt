@@ -8,5 +8,6 @@ data class ClasificacionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val nombre: String,
-    val fechaCreacion: Long = System.currentTimeMillis()
+    val fechaCreacion: Long = System.currentTimeMillis(),
+    val puntuacionInvertida: Boolean = false
 )

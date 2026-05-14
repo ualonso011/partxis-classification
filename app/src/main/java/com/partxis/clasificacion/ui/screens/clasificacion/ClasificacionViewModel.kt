@@ -71,7 +71,8 @@ class ClasificacionViewModel @Inject constructor(
 
     private fun loadRanking() {
         viewModelScope.launch {
-            val ranking = repository.getRanking(clasificacionId)
+            val invertido = _uiState.value.clasificacion?.puntuacionInvertida ?: false
+            val ranking = repository.getRanking(clasificacionId, invertido)
             _uiState.value = _uiState.value.copy(ranking = ranking)
         }
     }

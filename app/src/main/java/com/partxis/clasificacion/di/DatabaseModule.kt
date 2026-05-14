@@ -22,7 +22,7 @@ object DatabaseModule {
             context,
             PartxisDatabase::class.java,
             "partxis_database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

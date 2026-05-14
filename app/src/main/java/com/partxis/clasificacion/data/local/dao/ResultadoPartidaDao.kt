@@ -27,7 +27,6 @@ interface ResultadoPartidaDao {
         INNER JOIN partidas p ON p.id = rp.partidaId
         WHERE p.clasificacionId = :clasificacionId
         GROUP BY rp.jugadorId
-        ORDER BY totalPuntos DESC
     """)
     suspend fun getRankingByClasificacion(clasificacionId: Long): List<JugadorPuntos>
 }
