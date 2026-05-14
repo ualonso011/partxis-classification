@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.partxis.clasificacion.data.repository.PartxisRepository
 import com.partxis.clasificacion.domain.model.*
+import com.partxis.clasificacion.data.local.entity.PuntuacionPosicionEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.domain.model.*
 import com.partxis.clasificacion.ui.theme.*
+import com.partxis.clasificacion.data.local.entity.PuntuacionPosicionEntity
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
