@@ -382,7 +382,7 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
                 Text(
                     "$posicion",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
+                    color = if (posicion <= 3) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -407,7 +407,7 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
                 Text(
                     "${entry.victorias} victorias",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    color = if (posicion <= 3) Color.Black.copy(alpha = 0.7f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
 
@@ -415,7 +415,7 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
                 "${entry.puntosTotales} pts",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.primary
             )
         }
     }
