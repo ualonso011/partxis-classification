@@ -2,6 +2,7 @@ package com.partxis.clasificacion.di
 
 import android.content.Context
 import androidx.room.Room
+import com.partxis.clasificacion.data.local.MIGRATION_1_2
 import com.partxis.clasificacion.data.local.PartxisDatabase
 import com.partxis.clasificacion.data.local.dao.*
 import dagger.Module
@@ -22,7 +23,7 @@ object DatabaseModule {
             context,
             PartxisDatabase::class.java,
             "partxis_database"
-        ).fallbackToDestructiveMigration().build()
+        ).addMigrations(MIGRATION_1_2).build()
     }
 
     @Provides

@@ -4,6 +4,8 @@ import com.partxis.clasificacion.data.local.dao.*
 import com.partxis.clasificacion.data.local.entity.*
 import com.partxis.clasificacion.domain.model.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,6 +18,9 @@ class PartxisRepository @Inject constructor(
     private val resultadoPartidaDao: ResultadoPartidaDao,
     private val puntuacionPosicionDao: PuntuacionPosicionDao
 ) {
+    private val _partidaSaved = MutableSharedFlow<Long>()
+    val partidaSaved: Flow<Long> = _partidaSaved.asSharedFlow()
+
     fun getAllClasificaciones(): Flow<List<Clasificacion>> {
         return clasificacionDao.getAllClasificaciones().map { entities ->
             entities.map { it.toDomain() }
@@ -97,6 +102,7 @@ class PartxisRepository @Inject constructor(
         }
 
         resultadoPartidaDao.insertResultados(resultadosEntities)
+        _partidaSaved.emit(partidaId)
         return partidaId
     }
 

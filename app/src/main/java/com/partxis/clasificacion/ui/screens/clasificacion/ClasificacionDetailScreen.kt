@@ -356,7 +356,10 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = backgroundColor)
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor,
+            contentColor = if (posicion <= 3) Color.Black else MaterialTheme.colorScheme.onSurface
+        )
     ) {
         Row(
             modifier = Modifier

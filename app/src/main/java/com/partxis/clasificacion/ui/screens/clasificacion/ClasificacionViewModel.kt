@@ -38,6 +38,11 @@ class ClasificacionViewModel @Inject constructor(
 
     init {
         loadData()
+        viewModelScope.launch {
+            repository.partidaSaved.collect {
+                loadRanking()
+            }
+        }
     }
 
     private fun loadData() {
