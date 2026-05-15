@@ -27,8 +27,11 @@ import java.util.*
 @Composable
 fun HomeScreen(
     onClasificacionClick: (Long) -> Unit,
+    onVersionClick: () -> Unit,
     toggleTheme: () -> Unit,
     isDarkTheme: Boolean,
+    currentLanguage: String,
+    onLanguageChange: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -42,6 +45,10 @@ fun HomeScreen(
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 actions = {
+                    LanguageSelector(
+                        currentLanguage = currentLanguage,
+                        onLanguageChange = onLanguageChange
+                    )
                     IconButton(onClick = toggleTheme) {
                         Icon(
                             imageVector = if (isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
@@ -115,12 +122,81 @@ fun HomeScreen(
         }
     }
 
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+                .clickable { onVersionClick() }
+                .padding(8.dp)
+        ) {
+            Text(
+                "v30",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+            )
+        }
+    }
+
     if (uiState.showCreateDialog) {
         CreateClasificacionDialog(
             nombre = uiState.newClasificacionName,
             onNombreChange = { viewModel.updateNewClasificacionName(it) },
             onConfirm = { viewModel.createClasificacion() },
             onDismiss = { viewModel.hideCreateDialog() }
+        )
+    }
+}
+
+@Composable
+fun LanguageSelector(
+    currentLanguage: String,
+    onLanguageChange: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier.padding(end = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
+        LanguageButton(
+            label = "EU",
+            isSelected = currentLanguage == "eu",
+            onClick = { onLanguageChange("eu") }
+        )
+        LanguageButton(
+            label = "ES",
+            isSelected = currentLanguage == "es",
+            onClick = { onLanguageChange("es") }
+        )
+        LanguageButton(
+            label = "EN",
+            isSelected = currentLanguage == "en",
+            onClick = { onLanguageChange("en") }
+        )
+    }
+}
+
+@Composable
+fun LanguageButton(
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    TextButton(
+        onClick = onClick,
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = if (isSelected)
+                MaterialTheme.colorScheme.onPrimary
+            else
+                MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
+        ),
+        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
         )
     }
 }

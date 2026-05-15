@@ -163,6 +163,8 @@ fun PuntuacionPosicionCard(
         else -> MaterialTheme.colorScheme.surfaceVariant
     }
 
+    var textoTemporal by remember(puntos) { mutableStateOf(puntos.toString()) }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -194,9 +196,12 @@ fun PuntuacionPosicionCard(
             Spacer(modifier = Modifier.width(8.dp))
 
             OutlinedTextField(
-                value = puntos.toString(),
-                onValueChange = { value: String ->
-                    value.toIntOrNull()?.let { onPuntosChange(it) }
+                value = textoTemporal,
+                onValueChange = { nuevoTexto ->
+                    textoTemporal = nuevoTexto
+                    nuevoTexto.toIntOrNull()?.let { nuevoValor ->
+                        onPuntosChange(nuevoValor)
+                    }
                 },
                 modifier = Modifier.width(80.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

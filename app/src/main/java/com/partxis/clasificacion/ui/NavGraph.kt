@@ -10,6 +10,7 @@ import com.partxis.clasificacion.ui.screens.clasificacion.ClasificacionDetailScr
 import com.partxis.clasificacion.ui.screens.home.HomeScreen
 import com.partxis.clasificacion.ui.screens.partida.NuevaPartidaScreen
 import com.partxis.clasificacion.ui.screens.home.EditPuntuacionesScreen
+import com.partxis.clasificacion.ui.screens.home.VersionInfoScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -22,6 +23,7 @@ sealed class Screen(val route: String) {
     object EditPuntuaciones : Screen("edit_puntuaciones/{clasificacionId}") {
         fun createRoute(clasificacionId: Long) = "edit_puntuaciones/$clasificacionId"
     }
+    object VersionInfo : Screen("version_info")
 }
 
 @Composable
@@ -81,6 +83,13 @@ fun NavGraph(
             EditPuntuacionesScreen(
                 clasificacionId = clasificacionId,
                 onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.VersionInfo.route) {
+            VersionInfoScreen(
+                onBack = { navController.popBackStack() },
+                currentVersion = "v30"
             )
         }
     }

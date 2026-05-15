@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import com.partxis.clasificacion.BuildConfig
 import com.partxis.clasificacion.data.PreferencesManager
 import com.partxis.clasificacion.ui.NavGraph
 import com.partxis.clasificacion.ui.theme.PartxisClasificacionTheme
@@ -25,9 +26,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var isDarkTheme by remember { mutableStateOf(false) }
+            var currentLanguage by remember { mutableStateOf("eu") }
 
             LaunchedEffect(Unit) {
                 isDarkTheme = preferencesManager.isDarkTheme.first()
+                currentLanguage = preferencesManager.language.first()
             }
 
             PartxisClasificacionTheme(darkTheme = isDarkTheme) {
@@ -40,7 +43,18 @@ class MainActivity : ComponentActivity() {
                             preferencesManager.setDarkTheme(isDarkTheme)
                         }
                     },
-                    isDarkTheme = isDarkTheme
+                    isDarkTheme = isDarkTheme,
+                    currentLanguage = currentLanguage,
+                    onLanguageChange = { lang ->
+                        currentLanguage = lang
+                        lifecycleScope.launch {
+                            preferencesManager.setLanguage(lang)
+                        }
+                    },
+                    currentVersion = BuildConfig.VERSION_NAME,
+                    onVersionClick = {
+                        navController.navigate("version_info")
+                    }
                 )
             }
         }
