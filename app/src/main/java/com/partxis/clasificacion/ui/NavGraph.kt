@@ -30,7 +30,11 @@ sealed class Screen(val route: String) {
 fun NavGraph(
     navController: NavHostController,
     toggleTheme: () -> Unit,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    currentLanguage: String,
+    onLanguageChange: (String) -> Unit,
+    currentVersion: String,
+    onVersionClick: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -41,8 +45,11 @@ fun NavGraph(
                 onClasificacionClick = { id ->
                     navController.navigate(Screen.ClasificacionDetail.createRoute(id))
                 },
+                onVersionClick = onVersionClick,
                 toggleTheme = toggleTheme,
-                isDarkTheme = isDarkTheme
+                isDarkTheme = isDarkTheme,
+                currentLanguage = currentLanguage,
+                onLanguageChange = onLanguageChange
             )
         }
 
@@ -89,7 +96,7 @@ fun NavGraph(
         composable(Screen.VersionInfo.route) {
             VersionInfoScreen(
                 onBack = { navController.popBackStack() },
-                currentVersion = "v30"
+                currentVersion = currentVersion
             )
         }
     }
