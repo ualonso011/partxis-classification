@@ -49,7 +49,8 @@ fun NavGraph(
                 toggleTheme = toggleTheme,
                 isDarkTheme = isDarkTheme,
                 currentLanguage = currentLanguage,
-                onLanguageChange = onLanguageChange
+                onLanguageChange = onLanguageChange,
+                currentVersion = currentVersion
             )
         }
 

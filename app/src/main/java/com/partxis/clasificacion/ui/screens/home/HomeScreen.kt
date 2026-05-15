@@ -118,7 +118,8 @@ fun HomeScreen(
                     ClasificacionCard(
                         clasificacion = clasificacion,
                         onClick = { onClasificacionClick(clasificacion.id) },
-                        onDelete = { viewModel.deleteClasificacion(clasificacion) }
+                        onDelete = { viewModel.deleteClasificacion(clasificacion) },
+                        currentLanguage = currentLanguage
                     )
                 }
             }
@@ -148,7 +149,8 @@ fun HomeScreen(
             nombre = uiState.newClasificacionName,
             onNombreChange = { viewModel.updateNewClasificacionName(it) },
             onConfirm = { viewModel.createClasificacion() },
-            onDismiss = { viewModel.hideCreateDialog() }
+            onDismiss = { viewModel.hideCreateDialog() },
+            currentLanguage = currentLanguage
         )
     }
 }
@@ -208,10 +210,12 @@ fun LanguageButton(
 fun ClasificacionCard(
     clasificacion: Clasificacion,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    currentLanguage: String
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
     val dateFormat = remember { SimpleDateFormat("dd MMM yyyy", Locale.getDefault()) }
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     Card(
         modifier = Modifier
@@ -298,8 +302,10 @@ fun CreateClasificacionDialog(
     nombre: String,
     onNombreChange: (String) -> Unit,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    currentLanguage: String
 ) {
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(s("nueva_clasificacion_title")) },
