@@ -40,11 +40,16 @@ android {
                 "proguard-rules.pro"
             )
             if (project.hasProperty("KEYSTORE_PATH")) {
-                signingConfig = signingConfigs.getByName("debug").apply {
-                    storeFile = file(project.property("KEYSTORE_PATH").toString())
-                    storePassword = project.property("KEYSTORE_PASSWORD").toString()
-                    keyAlias = project.property("KEYSTORE_ALIAS").toString()
-                    keyPassword = project.property("KEYSTORE_PASSWORD").toString()
+                val storeFile = file(project.property("KEYSTORE_PATH").toString())
+                val storePassword = project.property("KEYSTORE_PASSWORD").toString()
+                val keyAlias = project.property("KEYSTORE_ALIAS").toString()
+                val keyPassword = storePassword
+
+                signingConfigs.create("release") {
+                    storeFile = storeFile
+                    storePassword = storePassword
+                    keyAlias = keyAlias
+                    keyPassword = keyPassword
                 }
             }
         }
