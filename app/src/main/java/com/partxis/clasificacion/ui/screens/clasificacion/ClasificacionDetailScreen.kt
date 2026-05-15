@@ -265,9 +265,11 @@ fun JugadoresTab(
 fun JugadorCard(
     jugador: Jugador,
     onEdit: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    currentLanguage: String = "eu"
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -315,8 +317,8 @@ fun JugadorCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text(s("eliminar_jugador")) },
-            text = { Text(s("confirmar_eliminar_jugador").format(jugador.nombre)) },
+            title = { Text(Strings.get("eliminar_jugador", "eu")) },
+            text = { Text(Strings.get("confirmar_eliminar_jugador", "eu").format(jugador.nombre)) },
             confirmButton = {
                 TextButton(onClick = {
                     onDelete()
@@ -572,19 +574,19 @@ fun PartidaCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text(Strings.get("eliminar_partida", currentLanguage)) },
-            text = { Text(Strings.get("confirmar_eliminar_partida", currentLanguage)) },
+            title = { Text(Strings.get("eliminar_partida", "eu")) },
+            text = { Text(Strings.get("confirmar_eliminar_partida", "eu")) },
             confirmButton = {
                 TextButton(onClick = {
                     onDelete()
                     showDeleteDialog = false
                 }) {
-                    Text(Strings.get("eliminar", currentLanguage), color = MaterialTheme.colorScheme.error)
+                    Text(Strings.get("eliminar", "eu"), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text(Strings.get("cancelar", currentLanguage))
+                    Text(Strings.get("cancelar", "eu"))
                 }
             }
         )

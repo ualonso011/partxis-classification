@@ -199,7 +199,7 @@ fun PosicionCard(
                 onExpandedChange = { expanded = it }
             ) {
                 OutlinedTextField(
-                    value = if (posicion == 0) Strings.get("posicion", currentLanguage) else posicion.toString(),
+                    value = if (posicion == 0) Strings.get("posicion", "eu") else posicion.toString(),
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier
