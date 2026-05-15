@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.domain.model.Jugador
+import com.partxis.clasificacion.ui.Strings
 import com.partxis.clasificacion.ui.theme.ParchisAmarillo
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,10 +28,12 @@ fun NuevaPartidaScreen(
     clasificacionId: Long,
     onBack: () -> Unit,
     onPartidaSaved: () -> Unit,
+    currentLanguage: String,
     viewModel: NuevaPartidaViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val dateFormat = remember { SimpleDateFormat("dd MMM yyyy", Locale.getDefault()) }
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     LaunchedEffect(uiState.saved) {
         if (uiState.saved) {

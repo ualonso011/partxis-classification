@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.domain.model.*
+import com.partxis.clasificacion.ui.Strings
 import com.partxis.clasificacion.ui.theme.*
 import androidx.compose.foundation.isSystemInDarkTheme
 import java.text.SimpleDateFormat
@@ -36,18 +37,20 @@ fun ClasificacionDetailScreen(
     onBack: () -> Unit,
     onNuevaPartida: () -> Unit,
     onEditPuntuaciones: () -> Unit,
+    currentLanguage: String,
     viewModel: ClasificacionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var selectedTab by remember { mutableIntStateOf(0) }
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(uiState.clasificacion?.nombre ?: "Clasificación") },
+                title = { Text(uiState.clasificacion?.nombre ?: s("clasificacion")) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = s("volver"))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -63,7 +66,7 @@ fun ClasificacionDetailScreen(
                     onClick = onNuevaPartida,
                     containerColor = ParchisAmarillo
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Nueva partida")
+                    Icon(Icons.Default.Add, contentDescription = s("nueva_partida"))
                 }
             }
         }
@@ -77,19 +80,19 @@ fun ClasificacionDetailScreen(
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    text = { Text("Jugadores") },
+                    text = { Text(s("jugadores")) },
                     icon = { Icon(Icons.Default.People, null) }
                 )
                 Tab(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    text = { Text("Ranking") },
+                    text = { Text(s("ranking")) },
                     icon = { Icon(Icons.Default.Leaderboard, null) }
                 )
                 Tab(
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 },
-                    text = { Text("Historial") },
+                    text = { Text(s("historial")) },
                     icon = { Icon(Icons.Default.History, null) }
                 )
             }
@@ -101,7 +104,8 @@ fun ClasificacionDetailScreen(
                     onEditPlayer = { viewModel.showEditPlayerDialog(it) },
                     onDeletePlayer = { viewModel.deletePlayer(it) },
                     onEditPuntuaciones = onEditPuntuaciones,
-                    puntuaciones = uiState.puntuaciones
+                    puntuaciones = uiState.puntuaciones,
+                    currentLanguage = currentLanguage
                 )
                 1 -> RankingTab(ranking = uiState.ranking)
                 2 -> HistorialTab(
@@ -114,25 +118,27 @@ fun ClasificacionDetailScreen(
 
     if (uiState.showAddPlayerDialog) {
         PlayerDialog(
-            title = "Añadir Jugador",
+            title = s("anadir") + " " + s("jugadores").lowercase(),
             nombre = uiState.newPlayerName,
             color = uiState.newPlayerColor,
             onNombreChange = { viewModel.updateNewPlayerName(it) },
             onColorChange = { viewModel.updateNewPlayerColor(it) },
             onConfirm = { viewModel.addPlayer() },
-            onDismiss = { viewModel.hideAddPlayerDialog() }
+            onDismiss = { viewModel.hideAddPlayerDialog() },
+            currentLanguage = currentLanguage
         )
     }
 
     if (uiState.showEditPlayerDialog) {
         PlayerDialog(
-            title = "Editar Jugador",
+            title = s("editar") + " " + s("jugadores").lowercase(),
             nombre = uiState.newPlayerName,
             color = uiState.newPlayerColor,
             onNombreChange = { viewModel.updateNewPlayerName(it) },
             onColorChange = { viewModel.updateNewPlayerColor(it) },
             onConfirm = { viewModel.updatePlayer() },
-            onDismiss = { viewModel.hideEditPlayerDialog() }
+            onDismiss = { viewModel.hideEditPlayerDialog() },
+            currentLanguage = currentLanguage
         )
     }
 }
@@ -143,9 +149,20 @@ fun JugadoresTab(
     onAddPlayer: () -> Unit,
     onEditPlayer: (Jugador) -> Unit,
     onDeletePlayer: (Jugador) -> Unit,
-    onEditPuntuaciones: () -> Unit,
-    puntuaciones: List<PuntuacionPosicionEntity>
+    newPlayerName: String,
+    newPlayerColor: String,
+    onNewPlayerNameChange: (String) -> Unit,
+    onNewPlayerColorChange: (String) -> Unit,
+    showAddDialog: Boolean,
+    showEditDialog: Boolean,
+    onShowAddDialog: () -> Unit,
+    onShowEditDialog: (Jugador) -> Unit,
+    onHideDialog: () -> Unit,
+    onConfirmAdd: () -> Unit,
+    onConfirmEdit: () -> Unit,
+    currentLanguage: String
 ) {
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -156,11 +173,11 @@ fun JugadoresTab(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Jugadores (${jugadores.size})", style = MaterialTheme.typography.titleMedium)
+                Text("${s("jugadores")} (${jugadores.size})", style = MaterialTheme.typography.titleMedium)
                 TextButton(onClick = onAddPlayer) {
                     Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Añadir")
+                    Text(s("anadir"))
                 }
             }
         }
@@ -181,7 +198,7 @@ fun JugadoresTab(
                             tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Añade jugadores para empezar")
+                        Text(s("anade_jugadores"))
                     }
                 }
             }
@@ -270,7 +287,7 @@ fun JugadorCard(
             IconButton(onClick = onEdit) {
                 Icon(
                     Icons.Default.Edit,
-                    contentDescription = "Editar",
+                    contentDescription = s("editar"),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -278,7 +295,7 @@ fun JugadorCard(
             IconButton(onClick = { showDeleteDialog = true }) {
                 Icon(
                     Icons.Default.Delete,
-                    contentDescription = "Eliminar",
+                    contentDescription = s("eliminar"),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -288,8 +305,8 @@ fun JugadorCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Eliminar jugador") },
-            text = { Text("¿Eliminar a ${jugador.nombre}?") },
+            title = { Text(s("eliminar_jugador")) },
+            text = { Text(s("confirmar_eliminar_jugador").format(jugador.nombre)) },
             confirmButton = {
                 TextButton(onClick = {
                     onDelete()
@@ -324,7 +341,7 @@ fun RankingTab(ranking: List<RankingEntry>) {
                     tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("No hay ranking todavía")
+                Text(s("no_hay_ranking"))
                 Text(
                     "Juega partidas para ver la clasificación",
                     style = MaterialTheme.typography.bodySmall,
@@ -441,7 +458,7 @@ fun HistorialTab(
                     tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("No hay partidas jugadas")
+                Text(s("no_hay_partidas"))
             }
         }
     } else {
@@ -485,7 +502,7 @@ fun PartidaCard(
                 IconButton(onClick = { showDeleteDialog = true }) {
                     Icon(
                         Icons.Default.Delete,
-                        contentDescription = "Eliminar",
+                        contentDescription = s("eliminar"),
                         tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
                         modifier = Modifier.size(20.dp)
                     )
@@ -542,19 +559,19 @@ fun PartidaCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Eliminar partida") },
-            text = { Text("¿Eliminar esta partida del historial?") },
+            title = { Text(s("eliminar_partida")) },
+            text = { Text(s("confirmar_eliminar_partida")) },
             confirmButton = {
                 TextButton(onClick = {
                     onDelete()
                     showDeleteDialog = false
                 }) {
-                    Text("Eliminar", color = MaterialTheme.colorScheme.error)
+                    Text(s("eliminar"), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancelar")
+                    Text(s("cancelar"))
                 }
             }
         )
@@ -569,8 +586,10 @@ fun PlayerDialog(
     onNombreChange: (String) -> Unit,
     onColorChange: (String) -> Unit,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    currentLanguage: String
 ) {
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
@@ -579,14 +598,14 @@ fun PlayerDialog(
                 OutlinedTextField(
                     value = nombre,
                     onValueChange = onNombreChange,
-                    label = { Text("Nombre") },
+                    label = { Text(s("nombre")) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text("Color", style = MaterialTheme.typography.labelMedium)
+                Text(s("color"), style = MaterialTheme.typography.labelMedium)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -615,12 +634,12 @@ fun PlayerDialog(
                 onClick = onConfirm,
                 enabled = nombre.isNotBlank()
             ) {
-                Text("Guardar")
+                Text(s("guardar"))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(s("cancelar"))
             }
         }
     )

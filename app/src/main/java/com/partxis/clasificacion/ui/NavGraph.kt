@@ -67,7 +67,8 @@ fun NavGraph(
                 },
                 onEditPuntuaciones = {
                     navController.navigate(Screen.EditPuntuaciones.createRoute(clasificacionId))
-                }
+                },
+                currentLanguage = currentLanguage
             )
         }
 
