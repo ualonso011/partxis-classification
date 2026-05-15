@@ -56,6 +56,13 @@ jobs:
             -PversionCode=${{ steps.version.outputs.version_code }} \
             -PversionName=${{ steps.version.outputs.version_name }}
 
+      - name: List APK outputs
+        run: |
+          echo "=== Release dir ==="
+          ls -laR app/build/outputs/apk/release/
+          echo "=== Debug dir ==="
+          ls -laR app/build/outputs/apk/debug/
+
       - name: Prepare APK
         run: |
           if [ -f "app/build/outputs/apk/release/app-release.apk" ]; then
