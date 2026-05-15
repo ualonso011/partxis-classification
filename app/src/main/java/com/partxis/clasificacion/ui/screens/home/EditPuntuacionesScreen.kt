@@ -110,8 +110,11 @@ fun EditPuntuacionesScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-s("orden_invertido"),
-
+                                    s("orden_invertido"),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
                                     s("orden_invertido_desc"),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)

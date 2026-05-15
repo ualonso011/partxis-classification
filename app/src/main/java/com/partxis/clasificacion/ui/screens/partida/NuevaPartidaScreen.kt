@@ -199,7 +199,7 @@ fun PosicionCard(
                 onExpandedChange = { expanded = it }
             ) {
                 OutlinedTextField(
-                    value = if (posicion == 0) s("posicion").replace("%1\$d", "") else s("posicion").format(posicion),
+                    value = if (posicion == 0) s("posicion") else "$posicion${s("posicion")}",
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier

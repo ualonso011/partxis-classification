@@ -116,10 +116,11 @@ fun ClasificacionDetailScreen(
                     onConfirmEdit = { viewModel.updatePlayer() },
                     currentLanguage = currentLanguage
                 )
-                1 -> RankingTab(ranking = uiState.ranking)
+                1 -> RankingTab(ranking = uiState.ranking, currentLanguage = currentLanguage)
                 2 -> HistorialTab(
                     partidas = uiState.partidas,
-                    onDeletePartida = { viewModel.deletePartida(it) }
+                    onDeletePartida = { viewModel.deletePartida(it) },
+                    currentLanguage = currentLanguage
                 )
             }
         }
@@ -334,7 +335,8 @@ fun JugadorCard(
 }
 
 @Composable
-fun RankingTab(ranking: List<RankingEntry>) {
+fun RankingTab(ranking: List<RankingEntry>, currentLanguage: String = "eu") {
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     if (ranking.isEmpty()) {
         Box(
             modifier = Modifier
@@ -450,8 +452,10 @@ fun RankingCard(entry: RankingEntry, posicion: Int) {
 @Composable
 fun HistorialTab(
     partidas: List<Partida>,
-    onDeletePartida: (Long) -> Unit
+    onDeletePartida: (Long) -> Unit,
+    currentLanguage: String = "eu"
 ) {
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     if (partidas.isEmpty()) {
         Box(
             modifier = Modifier
