@@ -250,7 +250,7 @@ fun JugadoresTab(
                             style = MaterialTheme.typography.titleSmall
                         )
                         Text(
-                            if (puntuaciones.isEmpty()) "Sin configurar" else "${puntuaciones.size} posiciones configuradas",
+                            if (uiState.puntuaciones.isEmpty()) Strings.get("sin_configurar", currentLanguage) else Strings.get("puntuaciones_configuradas", currentLanguage),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         )
@@ -494,7 +494,8 @@ fun HistorialTab(
 @Composable
 fun PartidaCard(
     partida: Partida,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    currentLanguage: String = "eu"
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
     val dateFormat = remember { SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault()) }
@@ -517,7 +518,7 @@ fun PartidaCard(
                 IconButton(onClick = { showDeleteDialog = true }) {
                     Icon(
                         Icons.Default.Delete,
-                        contentDescription = s("eliminar"),
+                        contentDescription = Strings.get("eliminar", "eu"),
                         tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
                         modifier = Modifier.size(20.dp)
                     )
