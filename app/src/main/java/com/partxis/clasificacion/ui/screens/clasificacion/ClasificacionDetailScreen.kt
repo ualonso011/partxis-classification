@@ -227,7 +227,7 @@ fun JugadoresTab(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onEditPuntuaciones() },
+                    .clickable { },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
@@ -246,11 +246,11 @@ fun JugadoresTab(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            "Puntuación por posición",
+                            Strings.get("puntuacion_por_posicion", currentLanguage),
                             style = MaterialTheme.typography.titleSmall
                         )
                         Text(
-                            if (uiState.puntuaciones.isEmpty()) Strings.get("sin_configurar", currentLanguage) else Strings.get("puntuaciones_configuradas", currentLanguage),
+                            Strings.get("sin_configurar", currentLanguage),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         )
