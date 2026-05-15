@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.partxis.clasificacion.domain.model.Clasificacion
+import com.partxis.clasificacion.ui.Strings
 import com.partxis.clasificacion.ui.theme.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,14 +33,16 @@ fun HomeScreen(
     isDarkTheme: Boolean,
     currentLanguage: String,
     onLanguageChange: (String) -> Unit,
+    currentVersion: String,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Partxis", fontWeight = FontWeight.Bold) },
+                title = { Text(s("app_name"), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -52,7 +55,7 @@ fun HomeScreen(
                     IconButton(onClick = toggleTheme) {
                         Icon(
                             imageVector = if (isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                            contentDescription = "Cambiar tema",
+                            contentDescription = s("cambiar_tema"),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -64,7 +67,7 @@ fun HomeScreen(
                 onClick = { viewModel.showCreateDialog() },
                 containerColor = MaterialTheme.colorScheme.secondary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Nueva clasificación")
+                Icon(Icons.Default.Add, contentDescription = s("nueva_clasificacion"))
             }
         }
     ) { paddingValues ->
@@ -91,13 +94,13 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "No hay clasificaciones",
+                        s("no_clasificaciones"),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Toca + para crear una",
+                        s("toca_para_crear"),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
                     )
@@ -127,13 +130,13 @@ fun HomeScreen(
     ) {
         Box(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomStart)
                 .padding(16.dp)
                 .clickable { onVersionClick() }
                 .padding(8.dp)
         ) {
             Text(
-                "v30",
+                currentVersion,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             )
@@ -250,7 +253,7 @@ fun ClasificacionCard(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    "Creada: ${dateFormat.format(Date(clasificacion.fechaCreacion))}",
+                    "${s("creada").format(dateFormat.format(Date(clasificacion.fechaCreacion)))}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -259,7 +262,7 @@ fun ClasificacionCard(
             IconButton(onClick = { showDeleteDialog = true }) {
                 Icon(
                     Icons.Default.Delete,
-                    contentDescription = "Eliminar",
+                    contentDescription = s("eliminar"),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -269,8 +272,8 @@ fun ClasificacionCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Eliminar clasificación") },
-            text = { Text("¿Estás seguro de eliminar \"${clasificacion.nombre}\"? Se borrarán todos los datos.") },
+            title = { Text(s("eliminar_clasificacion")) },
+            text = { Text(s("confirmar_eliminar").format(clasificacion.nombre)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -278,12 +281,12 @@ fun ClasificacionCard(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text("Eliminar", color = MaterialTheme.colorScheme.error)
+                    Text(s("eliminar"), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancelar")
+                    Text(s("cancelar"))
                 }
             }
         )
@@ -299,12 +302,12 @@ fun CreateClasificacionDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Nueva Clasificación") },
+        title = { Text(s("nueva_clasificacion_title")) },
         text = {
             OutlinedTextField(
                 value = nombre,
                 onValueChange = onNombreChange,
-                label = { Text("Nombre") },
+                label = { Text(s("nombre")) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -314,12 +317,12 @@ fun CreateClasificacionDialog(
                 onClick = onConfirm,
                 enabled = nombre.isNotBlank()
             ) {
-                Text("Crear")
+                Text(s("crear"))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(s("cancelar"))
             }
         }
     )

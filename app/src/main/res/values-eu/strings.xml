@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home -->
+    <string name="app_name">Partxis</string>
+    <string name="no_clasificaciones">Ez dago sailkapenik</string>
+    <string name="toca_para_crear">Sakatu + sortzeko</string>
+    <string name="nueva_clasificacion">Sailkapen berria</string>
+    <string name="nombre">Izena</string>
+    <string name="crear">Sortu</string>
+    <string name="cancelar">Utzi</string>
+    <string name="eliminar">Ezabatu</string>
+    <string name="eliminar_clasificacion">Sailkapena ezabatu</string>
+    <string name="confirmar_eliminar">Ziur zaude \"%1$s\" ezabatu nahi duzula? Datu guztiak ezabatuko dira.</string>
+    <string name="creada">Sortuta: %1$s</string>
+
+    <!-- Clasificacion Detail -->
+    <string name="partidas">Partidak</string>
+    <string name="ranking">Sailkapena</string>
+    <string name="configurazioa">Konfigurazioa</string>
+    <string name="nueva_partida">Partida berria</string>
+    <string name="sin_partidas">Partida gabe</string>
+    <string name="toca_para_agregar">Sakatu + gehitzeko</string>
+    <string name="puntuaciones_configuradas">%1$d posizio konfiguratuta</string>
+    <string name="sin_configurar">Konfiguratu gabe</string>
+
+    <!-- Nueva Partida -->
+    <string name="seleccionar_jugadores">Jokalariak aukeratu</string>
+    <string name="guardar">Gorde</string>
+    <string name="jugadores">Jokalariak</string>
+
+    <!-- Puntuaciones -->
+    <string name="puntuacion_por_posicion">Posizioaren puntuazioa</string>
+    <string name="configura_puntos">Konfiguratu posizio bakoitzean lortzen diren puntuak</string>
+    <string name="puntos">Puntuak:</string>
+    <string name="orden_invertido">Ordena alderantzikatua</string>
+    <string name="orden_invertido_desc">Gutxiago daukanak irabazten du</string>
+    <string name="guardar_puntuaciones">Puntuak gorde</string>
+
+    <!-- Version Info -->
+    <string name="versiones">Bertsioak</string>
+    <string name="version_actual">Oraingo bertsioa</string>
+    <string name="creador">Sortzailea</string>
+    <string name="historial_versiones">Bertsioen historia</string>
+
+    <!-- General -->
+    <string name="volver">Itzuli</string>
+    <string name="cambiar_tema">Aldatu itxura</string>
+    <string name="nueva_clasificacion_title">Sailkapen berria</string>
+    <string name="partida_guardada">Partida gordeta</string>
+</resources>

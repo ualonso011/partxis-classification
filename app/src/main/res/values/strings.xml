@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Clasificación Partxis</string>
+    <!-- Home -->
+    <string name="app_name">Partxis</string>
+    <string name="no_clasificaciones">No hay clasificaciones</string>
+    <string name="toca_para_crear">Toca + para crear una</string>
+    <string name="nueva_clasificacion">Nueva Clasificación</string>
+    <string name="nombre">Nombre</string>
+    <string name="crear">Crear</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="eliminar_clasificacion">Eliminar clasificación</string>
+    <string name="confirmar_eliminar">¿Estás seguro de eliminar \"%1$s\"? Se borrarán todos los datos.</string>
+    <string name="creada">Creada: %1$s</string>
+
+    <!-- Clasificacion Detail -->
+    <string name="partidas">Partidas</string>
+    <string name="ranking">Ranking</string>
+    <string name="configuracion">Configuración</string>
+    <string name="nueva_partida">Nueva partida</string>
+    <string name="sin_partidas">Sin partidas</string>
+    <string name="toca_para_agregar">Toca + para agregar una</string>
+    <string name="puntuaciones_configuradas">%1$d posiciones configuradas</string>
+    <string name="sin_configurar">Sin configurar</string>
+
+    <!-- Nueva Partida -->
+    <string name="seleccionar_jugadores">Seleccionar jugadores</string>
+    <string name="guardar">Guardar</string>
+    <string name="jugadores">Jugadores</string>
+
+    <!-- Puntuaciones -->
+    <string name="puntuacion_por_posicion">Puntuación por Posición</string>
+    <string name="configura_puntos">Configura los puntos que se ganan por cada posición</string>
+    <string name="puntos">Puntos:</string>
+    <string name="orden_invertido">Orden invertido</string>
+    <string name="orden_invertido_desc">Gana el que menos puntos tiene</string>
+    <string name="guardar_puntuaciones">Guardar Puntuaciones</string>
+
+    <!-- Version Info -->
+    <string name="versiones">Versiones</string>
+    <string name="version_actual">Versión actual</string>
+    <string name="creador">Creador</string>
+    <string name="historial_versiones">Historial de versiones</string>
+
+    <!-- General -->
+    <string name="volver">Volver</string>
+    <string name="cambiar_tema">Cambiar tema</string>
+    <string name="nueva_clasificacion_title">Nueva Clasificación</string>
+    <string name="partida_guardada">Partida guardada</string>
 </resources>
