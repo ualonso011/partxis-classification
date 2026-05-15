@@ -103,6 +103,7 @@ fun ClasificacionDetailScreen(
                     onAddPlayer = { viewModel.showAddPlayerDialog() },
                     onEditPlayer = { viewModel.showEditPlayerDialog(it) },
                     onDeletePlayer = { viewModel.deletePlayer(it) },
+                    onEditPuntuaciones = onEditPuntuaciones,
                     newPlayerName = uiState.newPlayerName,
                     newPlayerColor = uiState.newPlayerColor,
                     onNewPlayerNameChange = { viewModel.updateNewPlayerName(it) },
@@ -159,6 +160,7 @@ fun JugadoresTab(
     onAddPlayer: () -> Unit,
     onEditPlayer: (Jugador) -> Unit,
     onDeletePlayer: (Jugador) -> Unit,
+    onEditPuntuaciones: () -> Unit,
     newPlayerName: String,
     newPlayerColor: String,
     onNewPlayerNameChange: (String) -> Unit,
@@ -227,7 +229,7 @@ fun JugadoresTab(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { },
+                    .clickable { onEditPuntuaciones() },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
