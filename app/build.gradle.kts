@@ -23,8 +23,8 @@ android {
         applicationId = "com.partxis.clasificacion"
         minSdk = 26
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = project.property("versionCode").toString().toInt()
+        versionName = project.property("versionName").toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
