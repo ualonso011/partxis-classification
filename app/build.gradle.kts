@@ -39,6 +39,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (project.hasProperty("KEYSTORE_PATH")) {
+                signingConfig = signingConfigs.getByName("debug").apply {
+                    storeFile = file(project.property("KEYSTORE_PATH").toString())
+                    storePassword = project.property("KEYSTORE_PASSWORD").toString()
+                    keyAlias = project.property("KEYSTORE_ALIAS").toString()
+                    keyPassword = project.property("KEYSTORE_PASSWORD").toString()
+                }
+            }
         }
     }
 
