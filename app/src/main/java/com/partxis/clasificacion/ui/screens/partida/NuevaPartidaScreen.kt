@@ -44,10 +44,10 @@ fun NuevaPartidaScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Nueva Partida") },
+                title = { Text(s("nueva_partida_title")) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = s("volver"))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -137,7 +137,7 @@ fun NuevaPartidaScreen(
                             } else {
                                 Icon(Icons.Default.Save, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Guardar Partida")
+                                Text(s("guardar_partida"))
                             }
                         }
                     }
@@ -150,7 +150,7 @@ fun NuevaPartidaScreen(
                 modifier = Modifier.padding(16.dp),
                 action = {
                     TextButton(onClick = { viewModel.clearError() }) {
-                        Text("OK")
+                        Text(s("ok"))
                     }
                 }
             ) {
@@ -199,7 +199,7 @@ fun PosicionCard(
                 onExpandedChange = { expanded = it }
             ) {
                 OutlinedTextField(
-                    value = if (posicion == 0) "Posición" else "${posicion}º",
+                    value = if (posicion == 0) s("posicion").replace("%1\$d", "") else s("posicion").format(posicion),
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier

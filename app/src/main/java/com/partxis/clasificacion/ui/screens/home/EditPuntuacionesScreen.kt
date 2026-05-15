@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.partxis.clasificacion.ui.Strings
 import com.partxis.clasificacion.ui.theme.Oro
 import com.partxis.clasificacion.ui.theme.Plata
 import com.partxis.clasificacion.ui.theme.Bronce
@@ -29,9 +30,11 @@ import com.partxis.clasificacion.ui.theme.BronceDark
 fun EditPuntuacionesScreen(
     clasificacionId: Long,
     onBack: () -> Unit,
+    currentLanguage: String,
     viewModel: EditPuntuacionesViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val s = { key: String -> Strings.get(key, currentLanguage) }
 
     LaunchedEffect(uiState.saved) {
         if (uiState.saved) {
@@ -42,10 +45,10 @@ fun EditPuntuacionesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Puntuación por Posición") },
+                title = { Text(s("puntuacion_por_posicion")) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = s("volver"))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -73,7 +76,7 @@ fun EditPuntuacionesScreen(
             ) {
                 item {
                     Text(
-                        "Configura los puntos que se ganan por cada posición",
+                        s("configura_puntos"),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
@@ -107,12 +110,9 @@ fun EditPuntuacionesScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    "Orden invertido",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(
-                                    "Gana el que menos puntos tiene",
+s("orden_invertido"),
+
+                                    s("orden_invertido_desc"),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                                 )
@@ -141,7 +141,7 @@ fun EditPuntuacionesScreen(
                         } else {
                             Icon(Icons.Default.Save, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Guardar Puntuaciones")
+                            Text(s("guardar_puntuaciones"))
                         }
                     }
                 }
@@ -189,7 +189,7 @@ fun PuntuacionPosicionCard(
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
-                "Puntos:",
+                s("puntos"),
                 style = MaterialTheme.typography.bodyMedium
             )
 

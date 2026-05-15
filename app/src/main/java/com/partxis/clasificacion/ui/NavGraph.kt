@@ -80,7 +80,8 @@ fun NavGraph(
             NuevaPartidaScreen(
                 clasificacionId = clasificacionId,
                 onBack = { navController.popBackStack() },
-                onPartidaSaved = { navController.popBackStack() }
+                onPartidaSaved = { navController.popBackStack() },
+                currentLanguage = currentLanguage
             )
         }
 
@@ -91,14 +92,16 @@ fun NavGraph(
             val clasificacionId = backStackEntry.arguments?.getLong("clasificacionId") ?: 0L
             EditPuntuacionesScreen(
                 clasificacionId = clasificacionId,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                currentLanguage = currentLanguage
             )
         }
 
         composable(Screen.VersionInfo.route) {
             VersionInfoScreen(
                 onBack = { navController.popBackStack() },
-                currentVersion = currentVersion
+                currentVersion = currentVersion,
+                currentLanguage = currentLanguage
             )
         }
     }

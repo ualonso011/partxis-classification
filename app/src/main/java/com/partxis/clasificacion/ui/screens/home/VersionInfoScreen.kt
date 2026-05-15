@@ -16,14 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.partxis.clasificacion.ui.Strings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VersionInfoScreen(
     onBack: () -> Unit,
-    currentVersion: String
+    currentVersion: String,
+    currentLanguage: String
 ) {
     val context = LocalContext.current
+    val s = { key: String -> Strings.get(key, currentLanguage) }
     val tags = remember {
         mutableStateListOf(
             VersionTag("v30", "2026-05-15"),
@@ -62,10 +65,10 @@ fun VersionInfoScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Versiones") },
+                title = { Text(s("versiones")) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = s("volver"))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -97,7 +100,7 @@ fun VersionInfoScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            "Versión actual",
+                            s("version_actual"),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                         )
@@ -140,8 +143,8 @@ fun VersionInfoScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text(
-                                "Creador",
+Text(
+                            s("creador"),
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                             )
@@ -158,7 +161,7 @@ fun VersionInfoScreen(
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    "Historial de versiones",
+                    s("historial_versiones"),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
