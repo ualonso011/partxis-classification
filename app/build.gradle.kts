@@ -32,19 +32,6 @@ android {
         }
     }
 
-    if (project.hasProperty("KEYSTORE_PATH")) {
-        val keystoreFile = file(project.property("KEYSTORE_PATH").toString())
-        val keystorePassword = project.property("KEYSTORE_PASSWORD").toString()
-        val keystoreAlias = project.property("KEYSTORE_ALIAS").toString()
-
-        signingConfigs.create("release") {
-            storeFile = keystoreFile
-            storePassword = keystorePassword
-            keyAlias = keystoreAlias
-            keyPassword = keystorePassword
-        }
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -52,9 +39,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (project.hasProperty("KEYSTORE_PATH")) {
-                signingConfig = signingConfigs.getByName("release")
-            }
         }
     }
 

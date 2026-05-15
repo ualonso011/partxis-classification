@@ -40,42 +40,17 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Decode keystore
-        run: |
-          echo "$RELEASE_KEYSTORE" | base64 -d > app/release.keystore
-
       - name: Build with Gradle
         run: |
-          gradle assembleRelease \
-            -PversionCode=${{ steps.version.outputs.version_code }} \
-            -PversionName=${{ steps.version.outputs.version_name }} \
-            -PKEYSTORE_PATH=app/release.keystore \
-            -PKEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
-            -PKEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }} \
-            || gradle assembleDebug \
+          gradle assembleDebug \
             -PversionCode=${{ steps.version.outputs.version_code }} \
             -PversionName=${{ steps.version.outputs.version_name }}
 
-      - name: List APK outputs
-        run: |
-          echo "=== Release dir ==="
-          ls -laR app/build/outputs/apk/release/
-          echo "=== Debug dir ==="
-          ls -laR app/build/outputs/apk/debug/
-
-      - name: Prepare APK
-        run: |
-          if [ -f "app/build/outputs/apk/release/app-release.apk" ]; then
-            cp app/build/outputs/apk/release/app-release.apk app-output.apk
-          elif [ -f "app/build/outputs/apk/release/app-release-unsigned.apk" ]; then
-            cp app/build/outputs/apk/release/app-release-unsigned.apk app-output.apk
-          elif [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
-            cp app/build/outputs/apk/debug/app-debug.apk app-output.apk
-          else
-            echo "No APK found!"
-            ls -la app/build/outputs/apk/
-            exit 1
-          fi
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ steps.version.outputs.version_name }}.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
