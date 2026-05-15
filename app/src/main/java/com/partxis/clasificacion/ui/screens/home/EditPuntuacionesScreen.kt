@@ -192,7 +192,7 @@ fun PuntuacionPosicionCard(
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
-                s("puntos"),
+                Strings.get("puntos", currentLanguage),
                 style = MaterialTheme.typography.bodyMedium
             )
 

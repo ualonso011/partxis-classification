@@ -572,19 +572,19 @@ fun PartidaCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text(s("eliminar_partida")) },
-            text = { Text(s("confirmar_eliminar_partida")) },
+            title = { Text(Strings.get("eliminar_partida", currentLanguage)) },
+            text = { Text(Strings.get("confirmar_eliminar_partida", currentLanguage)) },
             confirmButton = {
                 TextButton(onClick = {
                     onDelete()
                     showDeleteDialog = false
                 }) {
-                    Text(s("eliminar"), color = MaterialTheme.colorScheme.error)
+                    Text(Strings.get("eliminar", currentLanguage), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text(s("cancelar"))
+                    Text(Strings.get("cancelar", currentLanguage))
                 }
             }
         )
