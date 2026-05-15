@@ -103,8 +103,17 @@ fun ClasificacionDetailScreen(
                     onAddPlayer = { viewModel.showAddPlayerDialog() },
                     onEditPlayer = { viewModel.showEditPlayerDialog(it) },
                     onDeletePlayer = { viewModel.deletePlayer(it) },
-                    onEditPuntuaciones = onEditPuntuaciones,
-                    puntuaciones = uiState.puntuaciones,
+                    newPlayerName = uiState.newPlayerName,
+                    newPlayerColor = uiState.newPlayerColor,
+                    onNewPlayerNameChange = { viewModel.updateNewPlayerName(it) },
+                    onNewPlayerColorChange = { viewModel.updateNewPlayerColor(it) },
+                    showAddDialog = uiState.showAddPlayerDialog,
+                    showEditDialog = uiState.showEditPlayerDialog,
+                    onShowAddDialog = { viewModel.showAddPlayerDialog() },
+                    onShowEditDialog = { viewModel.showEditPlayerDialog(it) },
+                    onHideDialog = { viewModel.hideAddPlayerDialog() },
+                    onConfirmAdd = { viewModel.addPlayer() },
+                    onConfirmEdit = { viewModel.updatePlayer() },
                     currentLanguage = currentLanguage
                 )
                 1 -> RankingTab(ranking = uiState.ranking)
